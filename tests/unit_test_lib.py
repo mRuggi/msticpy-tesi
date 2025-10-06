@@ -69,7 +69,8 @@ def custom_mp_config(
     current_path = os.environ.get(pkg_config._CONFIG_ENV_VAR)
     if path_check and not Path(mp_path).is_file():
         raise FileNotFoundError(f"Setting MSTICPYCONFIG to non-existent file {mp_path}")
-    _lock_file_path = "./.mp_settings.lock"
+    _lock_file_path = Path("./.mp_settings.lock")
+    _lock_file_path.parent.mkdir(parents=True, exist_ok=True)
     try:
         with FileLock(_lock_file_path):
             try:
